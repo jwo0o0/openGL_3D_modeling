@@ -1,6 +1,5 @@
 #include <iostream>
 #ifdef __APPLE__
-/* Defined before OpenGL and GLUT includes to avoid deprecation messages */
 #define GL_SILENCE_DEPRECATION
 #include <OpenGL/gl.h>
 #include <GLUT/glut.h>
@@ -10,6 +9,8 @@
 #endif
 #include <math.h>
 #include <stdio.h>
+#include "SOIL.h"
+
 #define TEX_BLACK 1
 #define TEX_BODY 2
 #define TEX_SKIN 3
@@ -25,20 +26,18 @@
 void createCircle(GLfloat, GLfloat, GLfloat);
 void createCylinder(GLfloat,GLfloat,GLfloat);
 void createCylinder_tex(GLfloat,GLfloat,GLfloat, int, int);
-//int LoadGLTextures(char*,int);
+int LoadGLTextures(const char*,int);
 void createSphere(GLfloat);
-//AUX_RGBImageRec *LoadBMPFile(char *Filename);
+GLuint LoadBMPFile(const char* Filename);
 float x, y, z;
 float radius;
 float theta;
 float phi;
-float zoom = 90.0;
+float zoom = 60.0;
 
 int beforeX, beforeY;
 
-GLuint texture[10];                          // ≈ÿΩ∫√≥ ¿˙¿Â∞¯∞£
-
-//LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);                // WndProc º±æ
+GLuint texture[10];
 
 void InitLight()
 {
@@ -70,37 +69,37 @@ void InitLight()
 
     yrot = 0.0f;
 
-    glClearColor(0.5f, 0.5f, 0.5f, 1.0f); //π‡¿∫ »∏ªˆ¿ª πË∞Êªˆ¿∏∑Œ º≥¡§
-    glFrontFace(GL_CCW); //π›Ω√∞ËπÊ«‚¿∏∑Œ ∞®¿∫ ∆˙∏Æ∞Ô¿Ã æ’∏È
+    glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+    glFrontFace(GL_CCW);
 
-    glEnable(GL_LIGHTING); //¡∂∏Ì ƒ—±‚
-    glLightfv(GL_LIGHT0, GL_AMBIENT, ambientLight); //º≥¡§
-    //glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuseLight); //º≥¡§
-    //glLightfv(GL_LIGHT0, GL_SPECULAR, specular); //º≥¡§
-    //glLightfv(GL_LIGHT0, GL_POSITION, lightPosition); //º≥¡§
+    glEnable(GL_LIGHTING);
+    glLightfv(GL_LIGHT0, GL_AMBIENT, ambientLight);
+    //glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuseLight);
+    //glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
+    //glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
     glEnable(GL_LIGHT0); // 0π¯ ¡∂∏Ì ªÁøÎ
 }
 
 int init (void)
 {
     // texture loading
-//    LoadGLTextures((char *)"Data/black.bmp",TEX_BLACK);
-//    LoadGLTextures((char *)"Data/body.bmp",TEX_BODY);
-//    LoadGLTextures((char *)"Data/skin.bmp",TEX_SKIN);
-//    LoadGLTextures((char *)"Data/arm.bmp",TEX_ARM);
-//    LoadGLTextures((char *)"Data/shoe.bmp",TEX_SHOE);
-//    LoadGLTextures((char *)"Data/eye.bmp",TEX_EYE);
-//    LoadGLTextures((char *)"Data/face.bmp",TEX_FACE);
-//    LoadGLTextures((char *)"Data/hair.bmp",TEX_HAIR);
+    LoadGLTextures((char *)"/Users/jwo0o0/Desktop/openGL_3D_modeling/character_modeling/character_modeling/Data/black.bmp",TEX_BLACK);
+    LoadGLTextures((char *)"/Users/jwo0o0/Desktop/openGL_3D_modeling/character_modeling/character_modeling/Data/body.bmp",TEX_BODY);
+    LoadGLTextures((char *)"/Users/jwo0o0/Desktop/openGL_3D_modeling/character_modeling/character_modeling/Data/skin.bmp",TEX_SKIN);
+    LoadGLTextures((char *)"/Users/jwo0o0/Desktop/openGL_3D_modeling/character_modeling/character_modeling/Data/arm.bmp",TEX_ARM);
+    LoadGLTextures((char *)"/Users/jwo0o0/Desktop/openGL_3D_modeling/character_modeling/character_modeling/Data/shoe.bmp",TEX_SHOE);
+    LoadGLTextures((char *)"/Users/jwo0o0/Desktop/openGL_3D_modeling/character_modeling/character_modeling/Data/eye.bmp",TEX_EYE);
+    LoadGLTextures((char *)"/Users/jwo0o0/Desktop/openGL_3D_modeling/character_modeling/character_modeling/Data/face.bmp",TEX_FACE);
+    LoadGLTextures((char *)"/Users/jwo0o0/Desktop/openGL_3D_modeling/character_modeling/character_modeling/Data/hair.bmp",TEX_HAIR);
 
-    glEnable(GL_TEXTURE_2D);                        // ≈ÿΩ∫√≥ ∏≈«Œ¿ª »∞º∫»≠Ω√≈¥ ( ªıƒ⁄µÂ )
-    glShadeModel(GL_SMOOTH);                        // ∫ŒµÂ∑ØøÓ Ω¶¿Ãµ˘¿ª »∞º∫»≠Ω√≈¥
-    glClearColor(0.0f, 0.0f, 0.0f, 0.5f);                    // ∞À¿∫ªˆ πË∞Ê
-    glClearDepth(1.0f);                            // ±Ì¿Ãπˆ∆€ º≥¡§
-    glEnable(GL_DEPTH_TEST);                        // ±Ì¿Ã≈◊Ω∫∆Æ∏¶ ƒ‘
-    glDepthFunc(GL_LEQUAL);                            // ±Ì¿Ã≈◊Ω∫∆Æ ¡æ∑˘
-    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);            // ø¯±Ÿ ∞ËªÍ
-    return TRUE;                                // √ ±‚»≠ º∫∞¯
+    glEnable(GL_TEXTURE_2D);
+    glShadeModel(GL_SMOOTH);
+    glClearColor(0.0f, 0.0f, 0.0f, 0.5f);
+    glClearDepth(1.0f);
+    glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LEQUAL);
+    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+    return TRUE;
 }
 
 void reshape (int w, int h)
@@ -108,8 +107,8 @@ void reshape (int w, int h)
     glViewport(0, 0, w, h);
     glMatrixMode (GL_PROJECTION);
     glLoadIdentity();
-//    glOrtho (-5.0, 5.0, -5.0, 5.0, -5.0, 5.0);
-    gluPerspective(zoom, 1.0, 1.0, 100.0);  // ∏÷∞Ì ∞°±ÓøÚ¿ª «•«ˆ.
+    //glOrtho (-5.0, 5.0, -5.0, 5.0, -5.0, 5.0);
+    gluPerspective(zoom, 1.0, 1.0, 100.0);
 
     radius = 10.0;
     theta = 10.0;
@@ -318,7 +317,7 @@ void processMouseMotion(int x, int y)
 
     glutPostRedisplay();
 
-    if ( theta > 2.0 * PI ) // 360µµ ≥—æÓ∞°∏È
+    if ( theta > 2.0 * PI )
         theta -= (2.0 * PI);
     else if ( theta < 0.0 )
         theta += (2.0 * PI);
@@ -335,26 +334,6 @@ GLUquadricObj *sphere = gluNewQuadric();
   gluSphere(sphere,r,36 ,18);
 }
 
-void createSphereEye(GLfloat r)
-{
-    GLUquadricObj *sphere = gluNewQuadric();
-
-    gluQuadricTexture(sphere, GL_TRUE);
-    gluQuadricDrawStyle(sphere, GLU_FILL);
-    glPolygonMode(GL_FRONT, GL_FILL);
-    gluQuadricNormals(sphere, GLU_SMOOTH);
-    
-    GLfloat diffuseColor[] = {0.0f, 0.0f, 0.0f, 1.0f};  // 검정색으로 설정
-    GLfloat ambientColor[] = {0.0f, 0.0f, 0.0f, 1.0f};  // 검정색으로 설정
-
-    glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuseColor);
-    glMaterialfv(GL_FRONT, GL_AMBIENT, ambientColor);
-
-    gluSphere(sphere, r, 36, 18);
-
-    gluDeleteQuadric(sphere);
-}
-
 void createCylinder_tex(GLfloat bottom, GLfloat top, GLfloat height, int texture1, int texture2)
 {
   GLUquadricObj *cylinder = gluNewQuadric();
@@ -364,11 +343,11 @@ void createCylinder_tex(GLfloat bottom, GLfloat top, GLfloat height, int texture
   glPolygonMode(GL_FRONT, GL_FILL);
   gluQuadricNormals(cylinder, GLU_SMOOTH);
   gluCylinder(cylinder, bottom, top, height, 20, 100);
-    
+  
   glBindTexture(GL_TEXTURE_2D, texture[texture1]);
-  createCircle(bottom, 1.0f, 0.0f); // ø¯±‚µ’ πÿ∏È
+  createCircle(bottom, 1.0f, 0.0f);
   glBindTexture(GL_TEXTURE_2D, texture[texture2]);
-  createCircle(top, -1.0f, height); // ø¯±‚µ’ ¿≠∏È
+  createCircle(top, -1.0f, height);
 }
 
 void createCylinder(GLfloat bottom, GLfloat top, GLfloat height)
@@ -379,12 +358,10 @@ void createCylinder(GLfloat bottom, GLfloat top, GLfloat height)
   gluQuadricDrawStyle(cylinder, GLU_FILL);
   glPolygonMode(GL_FRONT, GL_FILL);
   gluQuadricNormals(cylinder, GLU_SMOOTH);
-
   gluCylinder(cylinder, bottom, top, height, 20, 100);
-    
   
-  createCircle(bottom, 1.0f, 0.0f); // ø¯±‚µ’ πÿ∏È
-  createCircle(top, -1.0f, height); // ø¯±‚µ’ ¿≠∏È
+  createCircle(bottom, 1.0f, 0.0f);
+  createCircle(top, -1.0f, height);
 }
 
 // for cylinder top & bottom
@@ -407,58 +384,46 @@ void createCircle(GLfloat r, GLfloat pos, GLfloat move){
   glEnd();
 }
 
-// texure load 1
-//AUX_RGBImageRec *LoadBMPFile(char *Filename)
-//{
-//    FILE *File=NULL;                            // ∆ƒ¿œ «⁄µÈ
-//    if (!Filename)                                // ∆ƒ¿œ¿Ã∏ß¿Ã ¿¸¥ﬁµ«æ˙¥¬¡ˆ »Æ¿Œ
-//   {
-//       return NULL;                            // ±◊∑∏¡ˆ æ ¥Ÿ∏È NULL¿ª π›»Ø
-//   }
-//
-//    File=fopen(Filename,"r");                        // ∆ƒ¿œ¿Ã ¡∏¿Á«œ¥¬¡ˆ »Æ¿Œ
-//    if (File)                                // ∆ƒ¿œ¿Ã ¡∏¿Á«œ¥¬∞°?
-//   {
-//       fclose(File);                            // «⁄µÈ¿ª ¥›¿Ω
-//       return auxDIBImageLoad(Filename);                // ∫Ò∆Æ∏ ¿ª ¿–æÓµÈ¿Ã∞Ì ∆˜¿Œ≈Õ∏¶ π›»Ø
-//   }
-//
-//    return NULL;
-//}
 
-// texure load 2
-//int LoadGLTextures(char* filename, int num)
-//{
-//    int Status=FALSE;                            // ªÛ≈¬ «•Ω√±‚
-//    AUX_RGBImageRec *TextureImage[1];                    // ≈ÿΩ∫√≥øÎ ¿˙¿Â∞¯∞£¿ª ∏∏µÎ
-//    memset(TextureImage,0,sizeof(void *)*1);                // ∆˜¿Œ≈Õ∏¶ NULL∑Œ º≥¡§
+GLuint LoadBMPFile(const char* Filename)
+{
+    GLuint textureID = 0;
+    int width, height;
+    
+    unsigned char* image = SOIL_load_image(Filename, &width, &height, 0, SOIL_LOAD_RGB);
+    if (image == NULL)
+    {
+        printf("Failed to load BMP file: %s\n", Filename);
+        return 0;
+    }
+    
+    glGenTextures(1, &textureID);
+    glBindTexture(GL_TEXTURE_2D, textureID);
+    
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+    
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    
+    SOIL_free_image_data(image);
+    
+    return textureID;
+}
 
-    //printf("%s\n",filename);
-//    if (TextureImage[0]=LoadBMPFile(filename))
-//    {
-//       Status=TRUE;                            // Status∏¶ TRUE∑Œ º≥¡§
-//       glGenTextures(1, &texture[num]);                    // ≈ÿΩ∫√≥∏¶ ∏∏µÎ
-//
-//       // ∫Ò∆Æ∏ ¿∏∑Œ∫Œ≈Õ ∞°¡Æø¬ µ•¿Ã≈Õ∏¶ ªÁøÎ«— ¿œπ›¿˚¿Œ ≈ÿΩ∫√≥ ª˝º∫
-//       glBindTexture(GL_TEXTURE_2D, texture[num]);
-//       // ≈ÿΩ∫√≥∏¶ ∏∏µÁ¥Ÿ
-//       glTexImage2D(GL_TEXTURE_2D, 0, 3, TextureImage[0]->sizeX, TextureImage[0]->sizeY, 0, GL_RGB, GL_UNSIGNED_BYTE, TextureImage[0]->data);
-//       glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);    // º±«¸ « ≈Õ∏µ
-//       glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);    // º±«¸ « ≈Õ∏µ
-//    }
-//
-//     if (TextureImage[0])                            // ≈ÿΩ∫√≥∞° ¡∏¿Á«œ¥¬¡ˆ »Æ¿Œ
-//   {
-//       if (TextureImage[0]->data)                    // ≈ÿΩ∫√≥ ¿ÃπÃ¡ˆ∞° ¡∏¿Á«œ¥¬¡ˆ »Æ¿Œ
-//       {
-//           free(TextureImage[0]->data);                // ≈ÿΩ∫√≥ ¿ÃπÃ¡ˆ ∏ﬁ∏∏Æ∏¶ «ÿ¡¶
-//       }
-//
-//       free(TextureImage[0]);                        // ¿ÃπÃ¡ˆ ±∏¡∂√º∏¶ «ÿ¡¶
-//   }
-//
-//    return Status;                                // Status∏¶ π›»Ø
-//}
+int LoadGLTextures(const char* filename, int num)
+{
+    GLuint textureID = LoadBMPFile(filename);
+    if (textureID == 0)
+    {
+        return FALSE;
+    }
+    
+    texture[num] = textureID;
+    
+    return TRUE;
+}
+
+
 
 int main (int argc, char** argv)
 {
@@ -466,7 +431,7 @@ int main (int argc, char** argv)
     glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH );
     glutInitWindowPosition (100, 100);
     glutInitWindowSize (1000, 1000);
-    glutCreateWindow ("IU YOU&I ver");
+    glutCreateWindow ("Miffy");
     init();
     InitLight();
     glutDisplayFunc (display);
