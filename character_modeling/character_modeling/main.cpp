@@ -214,31 +214,31 @@ void display (void)
     glScalef(0.9, 1.0, 1.0);
     createSphere(2.0f); // head
     
-    glBindTexture(GL_TEXTURE_2D, texture[TEX_SKIN]);
+    glBindTexture(GL_TEXTURE_2D, texture[TEX_BLACK]);
     glLoadIdentity();
     gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
-    glTranslatef(0.7, 1.7, 2.8);
+    glTranslatef(0.7, -1.7, 2.8);
     createSphere(0.2f); // left eye
     
-    glBindTexture(GL_TEXTURE_2D, texture[TEX_SKIN]);
+    glBindTexture(GL_TEXTURE_2D, texture[TEX_BLACK]);
     glLoadIdentity();
     gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
-    glTranslatef(-0.7, 1.7, 2.8);
+    glTranslatef(-0.7, -1.7, 2.8);
     createSphere(0.2f); // right eye
     
-    glBindTexture(GL_TEXTURE_2D, texture[TEX_ARM]);
+    glBindTexture(GL_TEXTURE_2D, texture[TEX_BLACK]);
     glLoadIdentity();
     gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
-    glTranslatef(0.3, 1.8, 2);
+    glTranslatef(0.2, -1.8, 2);
     glRotatef(60, 0.0, -1.0, 0.0);
-    createCylinder_tex(0.07, 0.07, 0.7,TEX_SKIN,TEX_BLACK); // right arm
+    createCylinder_tex(0.05, 0.05, 0.5,TEX_SKIN,TEX_BLACK); // mouth
     
-    glBindTexture(GL_TEXTURE_2D, texture[TEX_ARM]);
+    glBindTexture(GL_TEXTURE_2D, texture[TEX_BLACK]);
     glLoadIdentity();
     gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
-    glTranslatef(-0.3, 1.8, 2);
+    glTranslatef(-0.2, -1.8, 2);
     glRotatef(-60, 0.0, -1.0, 0.0);
-    createCylinder_tex(0.07, 0.07, 0.7,TEX_SKIN,TEX_BLACK); // right arm
+    createCylinder_tex(0.05, 0.05, 0.5,TEX_SKIN,TEX_BLACK); // mouth
     
     glBindTexture(GL_TEXTURE_2D, texture[TEX_ARM]);
     glLoadIdentity();
