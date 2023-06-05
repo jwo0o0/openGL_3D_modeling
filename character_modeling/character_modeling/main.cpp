@@ -33,7 +33,7 @@ float x, y, z;
 float radius;
 float theta;
 float phi;
-float zoom = 60.0;
+float zoom = 100.0;
 
 int beforeX, beforeY;
 
@@ -262,6 +262,31 @@ void display (void)
     glRotatef(80, 0.0, -1.0, 0.0);
     glScalef(4.0, 1.2, 1.3);
     createSphere(0.4f); // left pony
+    
+    glBindTexture(GL_TEXTURE_2D, texture[TEX_ARM]);
+    glLoadIdentity();
+    gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
+    glTranslatef(2.3, 0.0, -0.5);
+    glRotatef(-15, 0.0, -1.0, 0.0);
+    createCylinder_tex(0.05, 0.05, 6.5,TEX_SKIN,TEX_BLACK); // ballon line
+    
+//    glBindTexture(GL_TEXTURE_2D, texture[TEX_BODY]);
+//    glLoadIdentity();
+//    gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
+//    glTranslatef(4, 0.0, 6);
+//    createCylinder_tex(0,1.2,2.4,TEX_BLACK,TEX_BLACK);   // ballon middle
+    
+    glBindTexture(GL_TEXTURE_2D, texture[TEX_BODY]);
+    glLoadIdentity();
+    gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
+    glTranslatef(4, 0.0, 5.5);
+    createCylinder_tex(0.5,0,1.0,TEX_BLACK,TEX_BLACK);   // ballon bottom
+    
+    glBindTexture(GL_TEXTURE_2D, texture[TEX_SKIN]);
+    glLoadIdentity();
+    gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
+    glTranslatef(4, 0, 7.5);
+    createSphere(1.5f); // ballon top
     
     glFlush ();
     glutSwapBuffers();
