@@ -16,9 +16,9 @@
 #define TEX_SKIN 3
 #define TEX_ARM 4
 #define TEX_SHOE 5
-#define TEX_EYE 6
 #define TEX_FACE 7
 #define TEX_HAIR 8
+#define TEX_BALL 9
 #define PI 3.141592
 #define TRUE 0
 #define FALSE 1
@@ -80,14 +80,14 @@ void InitLight()
 int init (void)
 {
     // texture loading
-    LoadGLTextures((char *)"/Users/jwo0o0/Desktop/texture/black.bmp",TEX_BLACK);
+    LoadGLTextures((char *)"/Users/jwo0o0/Desktop/texture/black.jpg",TEX_BLACK);
     LoadGLTextures((char *)"/Users/jwo0o0/Desktop/texture/body.jpg",TEX_BODY);
-    LoadGLTextures((char *)"/Users/jwo0o0/Desktop/texture/skin.bmp",TEX_SKIN);
+    LoadGLTextures((char *)"/Users/jwo0o0/Desktop/texture/white.jpg",TEX_SKIN);
     LoadGLTextures((char *)"/Users/jwo0o0/Desktop/texture/arm.jpg",TEX_ARM);
-    LoadGLTextures((char *)"/Users/jwo0o0/Desktop/texture/shoe.bmp",TEX_SHOE);
-    LoadGLTextures((char *)"/Users/jwo0o0/Desktop/texture/eye.bmp",TEX_EYE);
-    LoadGLTextures((char *)"/Users/jwo0o0/Desktop/texture/face.bmp",TEX_FACE);
-    LoadGLTextures((char *)"/Users/jwo0o0/Desktop/texture/hair.bmp",TEX_HAIR);
+    LoadGLTextures((char *)"/Users/jwo0o0/Desktop/texture/white.jpg",TEX_SHOE);
+    LoadGLTextures((char *)"/Users/jwo0o0/Desktop/texture/white.jpg",TEX_FACE);
+    LoadGLTextures((char *)"/Users/jwo0o0/Desktop/texture/white.jpg",TEX_HAIR);
+    LoadGLTextures((char *)"/Users/jwo0o0/Desktop/texture/balloon.jpg", TEX_BALL);
 
     glEnable(GL_TEXTURE_2D);
     glShadeModel(GL_SMOOTH);
@@ -104,7 +104,6 @@ void reshape (int w, int h)
     glViewport(0, 0, w, h);
     glMatrixMode (GL_PROJECTION);
     glLoadIdentity();
-    //glOrtho (-5.0, 5.0, -5.0, 5.0, -5.0, 5.0);
     gluPerspective(zoom, 1.0, 1.0, 100.0);
 
     radius = 10.0;
@@ -116,7 +115,7 @@ void display (void)
     // for zoom
     glMatrixMode (GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(zoom, 1.0, 1.0, 100.0);  // ∏÷∞Ì ∞°±ÓøÚ¿ª «•«ˆ.
+    gluPerspective(zoom, 1.0, 1.0, 100.0);
 
     x = -radius * cos(phi) * cos(theta);
     y = -radius * cos(phi) * sin(theta);
@@ -254,26 +253,20 @@ void display (void)
     glScalef(4.0, 1.2, 1.3);
     createSphere(0.4f); // left pony
     
-    glBindTexture(GL_TEXTURE_2D, texture[TEX_ARM]);
+    glBindTexture(GL_TEXTURE_2D, texture[TEX_BLACK]);
     glLoadIdentity();
     gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
     glTranslatef(2.3, 0.0, -0.5);
     glRotatef(-15, 0.0, -1.0, 0.0);
     createCylinder_tex(0.05, 0.05, 6.5,TEX_SKIN,TEX_BLACK); // ballon line
     
-//    glBindTexture(GL_TEXTURE_2D, texture[TEX_BODY]);
-//    glLoadIdentity();
-//    gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
-//    glTranslatef(4, 0.0, 6);
-//    createCylinder_tex(0,1.2,2.4,TEX_BLACK,TEX_BLACK);   // ballon middle
-    
-    glBindTexture(GL_TEXTURE_2D, texture[TEX_BODY]);
+    glBindTexture(GL_TEXTURE_2D, texture[TEX_BALL]);
     glLoadIdentity();
     gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
     glTranslatef(4, 0.0, 5.5);
     createCylinder_tex(0.5,0,1.0,TEX_BLACK,TEX_BLACK);   // ballon bottom
     
-    glBindTexture(GL_TEXTURE_2D, texture[TEX_SKIN]);
+    glBindTexture(GL_TEXTURE_2D, texture[TEX_BALL]);
     glLoadIdentity();
     gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
     glTranslatef(4, 0, 7.5);
@@ -439,37 +432,6 @@ int LoadGLTextures(const char* filename, int num)
     return TRUE;
 }
 
-void displayBackground() {
-    glClear(GL_COLOR_BUFFER_BIT);
-    
-    //배경 이미지 텍스처 생성
-    GLuint texture;
-    glGenTextures(1, &texture);
-    glBindTexture(GL_TEXTURE_2D, texture);
-    
-    int width, height;
-    unsigned char* image = SOIL_load_image("/Users/jwo0o0/Desktop/openGL_3D_modeling/character_modeling/character_modeling/Data/background.jpg", &width, &height, 0, SOIL_LOAD_RGB);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
-    SOIL_free_image_data(image);
-    
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    
-    // 배경 사각형 그리기
-    glBegin(GL_QUADS);
-    glTexCoord2f(0.0f, 0.0f);
-    glVertex2f(-1.0f, -1.0f);
-    glTexCoord2f(1.0f, 0.0f);
-    glVertex2f(1.0f, -1.0f);
-    glTexCoord2f(1.0f, 1.0f);
-    glVertex2f(1.0f, 1.0f);
-    glTexCoord2f(0.0f, 1.0f);
-    glVertex2f(-1.0f, 1.0f);
-    glEnd();
-
-    glFlush();
-}
-
 
 
 int main (int argc, char** argv)
@@ -482,7 +444,6 @@ int main (int argc, char** argv)
     init();
     InitLight();
     glClearColor(0.2039f, 0.3843f, 0.7490f, 1.0f);
-    glutDisplayFunc(displayBackground);
     glutDisplayFunc (display);
     glutReshapeFunc (reshape);
     glutMouseFunc(processMouse);
