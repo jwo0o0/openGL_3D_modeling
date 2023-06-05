@@ -74,27 +74,24 @@ void InitLight()
 
     glEnable(GL_LIGHTING);
     glLightfv(GL_LIGHT0, GL_AMBIENT, ambientLight);
-    //glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuseLight);
-    //glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
-    //glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
-    glEnable(GL_LIGHT0); // 0π¯ ¡∂∏Ì ªÁøÎ
+    glEnable(GL_LIGHT0);
 }
 
 int init (void)
 {
     // texture loading
-    LoadGLTextures((char *)"/Users/jwo0o0/Desktop/openGL_3D_modeling/character_modeling/character_modeling/Data/black.bmp",TEX_BLACK);
-    LoadGLTextures((char *)"/Users/jwo0o0/Desktop/openGL_3D_modeling/character_modeling/character_modeling/Data/body.bmp",TEX_BODY);
-    LoadGLTextures((char *)"/Users/jwo0o0/Desktop/openGL_3D_modeling/character_modeling/character_modeling/Data/skin.bmp",TEX_SKIN);
-    LoadGLTextures((char *)"/Users/jwo0o0/Desktop/openGL_3D_modeling/character_modeling/character_modeling/Data/arm.bmp",TEX_ARM);
-    LoadGLTextures((char *)"/Users/jwo0o0/Desktop/openGL_3D_modeling/character_modeling/character_modeling/Data/shoe.bmp",TEX_SHOE);
-    LoadGLTextures((char *)"/Users/jwo0o0/Desktop/openGL_3D_modeling/character_modeling/character_modeling/Data/eye.bmp",TEX_EYE);
-    LoadGLTextures((char *)"/Users/jwo0o0/Desktop/openGL_3D_modeling/character_modeling/character_modeling/Data/face.bmp",TEX_FACE);
-    LoadGLTextures((char *)"/Users/jwo0o0/Desktop/openGL_3D_modeling/character_modeling/character_modeling/Data/hair.bmp",TEX_HAIR);
+    LoadGLTextures((char *)"/Users/jwo0o0/Desktop/texture/black.bmp",TEX_BLACK);
+    LoadGLTextures((char *)"/Users/jwo0o0/Desktop/texture/body.jpg",TEX_BODY);
+    LoadGLTextures((char *)"/Users/jwo0o0/Desktop/texture/skin.bmp",TEX_SKIN);
+    LoadGLTextures((char *)"/Users/jwo0o0/Desktop/texture/arm.jpg",TEX_ARM);
+    LoadGLTextures((char *)"/Users/jwo0o0/Desktop/texture/shoe.bmp",TEX_SHOE);
+    LoadGLTextures((char *)"/Users/jwo0o0/Desktop/texture/eye.bmp",TEX_EYE);
+    LoadGLTextures((char *)"/Users/jwo0o0/Desktop/texture/face.bmp",TEX_FACE);
+    LoadGLTextures((char *)"/Users/jwo0o0/Desktop/texture/hair.bmp",TEX_HAIR);
 
     glEnable(GL_TEXTURE_2D);
     glShadeModel(GL_SMOOTH);
-    glClearColor(0.0f, 0.0f, 0.0f, 0.5f);
+    glClearColor(0.2039f, 0.3843f, 0.7490f, 1.0f);
     glClearDepth(1.0f);
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
@@ -145,13 +142,13 @@ void display (void)
     glRotatef(-30, 0.0, -1.0, 0.0);
     createCylinder_tex(0.6, 0.6, 1.5,TEX_SKIN,TEX_BLACK); // left arm
     
-    glBindTexture(GL_TEXTURE_2D, texture[TEX_BLACK]);
+    glBindTexture(GL_TEXTURE_2D, texture[TEX_ARM]);
     glLoadIdentity();
     gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
     glTranslatef(-1.2, 0.0, 1.2);
     createSphere(0.6f); // left sholder
 
-    glBindTexture(GL_TEXTURE_2D, texture[TEX_BLACK]);
+    glBindTexture(GL_TEXTURE_2D, texture[TEX_ARM]);
     glLoadIdentity();
     gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
     glTranslatef(1.2, 0.0, 1.2);
@@ -200,12 +197,6 @@ void display (void)
     gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
     glTranslatef(0.0, 0.0, -1.2);
     createCylinder_tex(2.3,1.3,2.8,TEX_BLACK,TEX_BLACK);   // body
-    
-//    glBindTexture(GL_TEXTURE_2D, texture[TEX_BODY]);
-//    glLoadIdentity();
-//    gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
-//    glTranslatef(0.0, 0.0, 0.5);
-//    createCylinder_tex(2.3,1.3,1.0,TEX_BLACK,TEX_BLACK);   // body top
 
     glBindTexture(GL_TEXTURE_2D, texture[TEX_FACE]);
     glLoadIdentity();
@@ -214,31 +205,31 @@ void display (void)
     glScalef(0.9, 1.0, 1.0);
     createSphere(2.0f); // head
     
-    glBindTexture(GL_TEXTURE_2D, texture[TEX_SKIN]);
+    glBindTexture(GL_TEXTURE_2D, texture[TEX_BLACK]);
     glLoadIdentity();
     gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
-    glTranslatef(0.7, 1.7, 2.8);
+    glTranslatef(0.7, -1.7, 2.8);
     createSphere(0.2f); // left eye
     
-    glBindTexture(GL_TEXTURE_2D, texture[TEX_SKIN]);
+    glBindTexture(GL_TEXTURE_2D, texture[TEX_BLACK]);
     glLoadIdentity();
     gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
-    glTranslatef(-0.7, 1.7, 2.8);
+    glTranslatef(-0.7, -1.7, 2.8);
     createSphere(0.2f); // right eye
     
-    glBindTexture(GL_TEXTURE_2D, texture[TEX_ARM]);
+    glBindTexture(GL_TEXTURE_2D, texture[TEX_BLACK]);
     glLoadIdentity();
     gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
-    glTranslatef(0.3, 1.8, 2);
+    glTranslatef(0.2, -1.8, 2);
     glRotatef(60, 0.0, -1.0, 0.0);
-    createCylinder_tex(0.07, 0.07, 0.7,TEX_SKIN,TEX_BLACK); // right arm
+    createCylinder_tex(0.05, 0.05, 0.5,TEX_SKIN,TEX_BLACK); // mouth
     
-    glBindTexture(GL_TEXTURE_2D, texture[TEX_ARM]);
+    glBindTexture(GL_TEXTURE_2D, texture[TEX_BLACK]);
     glLoadIdentity();
     gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
-    glTranslatef(-0.3, 1.8, 2);
+    glTranslatef(-0.2, -1.8, 2);
     glRotatef(-60, 0.0, -1.0, 0.0);
-    createCylinder_tex(0.07, 0.07, 0.7,TEX_SKIN,TEX_BLACK); // right arm
+    createCylinder_tex(0.05, 0.05, 0.5,TEX_SKIN,TEX_BLACK); // mouth
     
     glBindTexture(GL_TEXTURE_2D, texture[TEX_ARM]);
     glLoadIdentity();
@@ -423,6 +414,37 @@ int LoadGLTextures(const char* filename, int num)
     return TRUE;
 }
 
+void displayBackground() {
+    glClear(GL_COLOR_BUFFER_BIT);
+    
+    //배경 이미지 텍스처 생성
+    GLuint texture;
+    glGenTextures(1, &texture);
+    glBindTexture(GL_TEXTURE_2D, texture);
+    
+    int width, height;
+    unsigned char* image = SOIL_load_image("/Users/jwo0o0/Desktop/openGL_3D_modeling/character_modeling/character_modeling/Data/background.jpg", &width, &height, 0, SOIL_LOAD_RGB);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+    SOIL_free_image_data(image);
+    
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    
+    // 배경 사각형 그리기
+    glBegin(GL_QUADS);
+    glTexCoord2f(0.0f, 0.0f);
+    glVertex2f(-1.0f, -1.0f);
+    glTexCoord2f(1.0f, 0.0f);
+    glVertex2f(1.0f, -1.0f);
+    glTexCoord2f(1.0f, 1.0f);
+    glVertex2f(1.0f, 1.0f);
+    glTexCoord2f(0.0f, 1.0f);
+    glVertex2f(-1.0f, 1.0f);
+    glEnd();
+
+    glFlush();
+}
+
 
 
 int main (int argc, char** argv)
@@ -434,6 +456,8 @@ int main (int argc, char** argv)
     glutCreateWindow ("Miffy");
     init();
     InitLight();
+    glClearColor(0.2039f, 0.3843f, 0.7490f, 1.0f);
+    glutDisplayFunc(displayBackground);
     glutDisplayFunc (display);
     glutReshapeFunc (reshape);
     glutMouseFunc(processMouse);
