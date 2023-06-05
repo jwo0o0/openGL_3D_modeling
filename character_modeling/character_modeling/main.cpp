@@ -1,5 +1,6 @@
 #include <iostream>
 #ifdef __APPLE__
+/* Defined before OpenGL and GLUT includes to avoid deprecation messages */
 #define GL_SILENCE_DEPRECATION
 #include <OpenGL/gl.h>
 #include <GLUT/glut.h>
@@ -9,8 +10,6 @@
 #endif
 #include <math.h>
 #include <stdio.h>
-#include "SOIL.h"
-
 #define TEX_BLACK 1
 #define TEX_BODY 2
 #define TEX_SKIN 3
@@ -26,18 +25,20 @@
 void createCircle(GLfloat, GLfloat, GLfloat);
 void createCylinder(GLfloat,GLfloat,GLfloat);
 void createCylinder_tex(GLfloat,GLfloat,GLfloat, int, int);
-int LoadGLTextures(const char*,int);
+//int LoadGLTextures(char*,int);
 void createSphere(GLfloat);
-GLuint LoadBMPFile(const char* Filename);
+//AUX_RGBImageRec *LoadBMPFile(char *Filename);
 float x, y, z;
 float radius;
 float theta;
 float phi;
-float zoom = 60.0;
+float zoom = 90.0;
 
 int beforeX, beforeY;
 
-GLuint texture[10];
+GLuint texture[10];                          // ≈ÿΩ∫√≥ ¿˙¿Â∞¯∞£
+
+//LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);                // WndProc º±æ
 
 void InitLight()
 {
@@ -69,37 +70,37 @@ void InitLight()
 
     yrot = 0.0f;
 
-    glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
-    glFrontFace(GL_CCW);
+    glClearColor(0.5f, 0.5f, 0.5f, 1.0f); //π‡¿∫ »∏ªˆ¿ª πË∞Êªˆ¿∏∑Œ º≥¡§
+    glFrontFace(GL_CCW); //π›Ω√∞ËπÊ«‚¿∏∑Œ ∞®¿∫ ∆˙∏Æ∞Ô¿Ã æ’∏È
 
-    glEnable(GL_LIGHTING);
-    glLightfv(GL_LIGHT0, GL_AMBIENT, ambientLight);
-    //glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuseLight);
-    //glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
-    //glLightfv(GL_LIGHT0, GL_POSITION, lightPosition);
+    glEnable(GL_LIGHTING); //¡∂∏Ì ƒ—±‚
+    glLightfv(GL_LIGHT0, GL_AMBIENT, ambientLight); //º≥¡§
+    //glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuseLight); //º≥¡§
+    //glLightfv(GL_LIGHT0, GL_SPECULAR, specular); //º≥¡§
+    //glLightfv(GL_LIGHT0, GL_POSITION, lightPosition); //º≥¡§
     glEnable(GL_LIGHT0); // 0π¯ ¡∂∏Ì ªÁøÎ
 }
 
 int init (void)
 {
     // texture loading
-    LoadGLTextures((char *)"/Users/jwo0o0/Desktop/openGL_3D_modeling/character_modeling/character_modeling/Data/black.bmp",TEX_BLACK);
-    LoadGLTextures((char *)"/Users/jwo0o0/Desktop/openGL_3D_modeling/character_modeling/character_modeling/Data/body.bmp",TEX_BODY);
-    LoadGLTextures((char *)"/Users/jwo0o0/Desktop/openGL_3D_modeling/character_modeling/character_modeling/Data/skin.bmp",TEX_SKIN);
-    LoadGLTextures((char *)"/Users/jwo0o0/Desktop/openGL_3D_modeling/character_modeling/character_modeling/Data/arm.bmp",TEX_ARM);
-    LoadGLTextures((char *)"/Users/jwo0o0/Desktop/openGL_3D_modeling/character_modeling/character_modeling/Data/shoe.bmp",TEX_SHOE);
-    LoadGLTextures((char *)"/Users/jwo0o0/Desktop/openGL_3D_modeling/character_modeling/character_modeling/Data/eye.bmp",TEX_EYE);
-    LoadGLTextures((char *)"/Users/jwo0o0/Desktop/openGL_3D_modeling/character_modeling/character_modeling/Data/face.bmp",TEX_FACE);
-    LoadGLTextures((char *)"/Users/jwo0o0/Desktop/openGL_3D_modeling/character_modeling/character_modeling/Data/hair.bmp",TEX_HAIR);
+//    LoadGLTextures((char *)"Data/black.bmp",TEX_BLACK);
+//    LoadGLTextures((char *)"Data/body.bmp",TEX_BODY);
+//    LoadGLTextures((char *)"Data/skin.bmp",TEX_SKIN);
+//    LoadGLTextures((char *)"Data/arm.bmp",TEX_ARM);
+//    LoadGLTextures((char *)"Data/shoe.bmp",TEX_SHOE);
+//    LoadGLTextures((char *)"Data/eye.bmp",TEX_EYE);
+//    LoadGLTextures((char *)"Data/face.bmp",TEX_FACE);
+//    LoadGLTextures((char *)"Data/hair.bmp",TEX_HAIR);
 
-    glEnable(GL_TEXTURE_2D);
-    glShadeModel(GL_SMOOTH);
-    glClearColor(0.0f, 0.0f, 0.0f, 0.5f);
-    glClearDepth(1.0f);
-    glEnable(GL_DEPTH_TEST);
-    glDepthFunc(GL_LEQUAL);
-    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-    return TRUE;
+    glEnable(GL_TEXTURE_2D);                        // ≈ÿΩ∫√≥ ∏≈«Œ¿ª »∞º∫»≠Ω√≈¥ ( ªıƒ⁄µÂ )
+    glShadeModel(GL_SMOOTH);                        // ∫ŒµÂ∑ØøÓ Ω¶¿Ãµ˘¿ª »∞º∫»≠Ω√≈¥
+    glClearColor(0.0f, 0.0f, 0.0f, 0.5f);                    // ∞À¿∫ªˆ πË∞Ê
+    glClearDepth(1.0f);                            // ±Ì¿Ãπˆ∆€ º≥¡§
+    glEnable(GL_DEPTH_TEST);                        // ±Ì¿Ã≈◊Ω∫∆Æ∏¶ ƒ‘
+    glDepthFunc(GL_LEQUAL);                            // ±Ì¿Ã≈◊Ω∫∆Æ ¡æ∑˘
+    glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);            // ø¯±Ÿ ∞ËªÍ
+    return TRUE;                                // √ ±‚»≠ º∫∞¯
 }
 
 void reshape (int w, int h)
@@ -107,8 +108,8 @@ void reshape (int w, int h)
     glViewport(0, 0, w, h);
     glMatrixMode (GL_PROJECTION);
     glLoadIdentity();
-    //glOrtho (-5.0, 5.0, -5.0, 5.0, -5.0, 5.0);
-    gluPerspective(zoom, 1.0, 1.0, 100.0);
+//    glOrtho (-5.0, 5.0, -5.0, 5.0, -5.0, 5.0);
+    gluPerspective(zoom, 1.0, 1.0, 100.0);  // ∏÷∞Ì ∞°±ÓøÚ¿ª «•«ˆ.
 
     radius = 10.0;
     theta = 10.0;
@@ -119,7 +120,7 @@ void display (void)
     // for zoom
     glMatrixMode (GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective(zoom, 1.0, 1.0, 100.0);
+    gluPerspective(zoom, 1.0, 1.0, 100.0);  // ∏÷∞Ì ∞°±ÓøÚ¿ª «•«ˆ.
 
     x = -radius * cos(phi) * cos(theta);
     y = -radius * cos(phi) * sin(theta);
@@ -134,139 +135,132 @@ void display (void)
     glBindTexture(GL_TEXTURE_2D, texture[TEX_ARM]);
     glLoadIdentity();
     gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
-    glTranslatef(2.5, 0.0, -0.5);
+    glTranslatef(1.9, 0.0, 0);
     glRotatef(30, 0.0, -1.0, 0.0);
-    createCylinder_tex(0.4, 0.4, 2.0,TEX_SKIN,TEX_BLACK); // right arm
+    createCylinder_tex(0.6, 0.6, 1.5,TEX_SKIN,TEX_BLACK); // right arm
     
     glBindTexture(GL_TEXTURE_2D, texture[TEX_ARM]);
     glLoadIdentity();
     gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
-    glTranslatef(-1.5, -2.0, 1.0);
-    glRotatef(90.0, -1.0, 0.0, 0.0);
-    createCylinder_tex(0.4, 0.4, 2.0,TEX_SKIN,TEX_BLACK); // left arm
+    glTranslatef(-1.9, 0.0, 0);
+    glRotatef(-30, 0.0, -1.0, 0.0);
+    createCylinder_tex(0.6, 0.6, 1.5,TEX_SKIN,TEX_BLACK); // left arm
+    
+    glBindTexture(GL_TEXTURE_2D, texture[TEX_BLACK]);
+    glLoadIdentity();
+    gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
+    glTranslatef(-1.2, 0.0, 1.2);
+    createSphere(0.6f); // left sholder
+
+    glBindTexture(GL_TEXTURE_2D, texture[TEX_BLACK]);
+    glLoadIdentity();
+    gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
+    glTranslatef(1.2, 0.0, 1.2);
+    createSphere(0.6f); // right sholder
     
     glBindTexture(GL_TEXTURE_2D, texture[TEX_SKIN]);
     glLoadIdentity();
     gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
-    glTranslatef(-0.8, 0.0, -3.2);
-    createCylinder(0.4, 1.0, 3.0); // ieft leg
+    glTranslatef(-1.8, 0.0, -0.3);
+    createSphere(0.6f); // left hand
     
     glBindTexture(GL_TEXTURE_2D, texture[TEX_SKIN]);
     glLoadIdentity();
     gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
-    glTranslatef(0.8, 0.0, -3.2);
-    createCylinder(0.4, 1.0, 3.0); // right leg
+    glTranslatef(1.8, 0.0, -0.3);
+    createSphere(0.6f); // right hand
+
+    
+    glBindTexture(GL_TEXTURE_2D, texture[TEX_SKIN]);
+    glLoadIdentity();
+    gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
+    glTranslatef(-0.6, 0.0, -2.2);
+    createCylinder(0.6, 0.4, 3.0); // ieft leg
+
+    
+    glBindTexture(GL_TEXTURE_2D, texture[TEX_SKIN]);
+    glLoadIdentity();
+    gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
+    glTranslatef(0.6, 0.0, -2.2);
+    createCylinder(0.6, 0.4, 3.0); // right leg
+    
+    glBindTexture(GL_TEXTURE_2D, texture[TEX_SHOE]);
+    glLoadIdentity();
+    gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
+    glTranslatef(0.6, 0.0, -2.1);
+    createSphere(0.6f); // right shoe
+    
+    glBindTexture(GL_TEXTURE_2D, texture[TEX_SHOE]);
+    glLoadIdentity();
+    gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
+    glTranslatef(-0.6, 0.0, -2.1);
+    createSphere(0.6f); // left shoe
 
     glBindTexture(GL_TEXTURE_2D, texture[TEX_BODY]);
     glLoadIdentity();
     gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
-    glTranslatef(0.0, 0.0, -1.5);
-    createCylinder_tex(2.3,1.3,3.0,TEX_BLACK,TEX_BLACK);   // body
-
-    glBindTexture(GL_TEXTURE_2D, texture[TEX_SKIN]);
-    glLoadIdentity();
-    gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
-    glTranslatef(-1.5, -2.0, 1.0);
-    createSphere(0.4f); // left hand
-
-    glBindTexture(GL_TEXTURE_2D, texture[TEX_SKIN]);
-    glLoadIdentity();
-    gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
-    glTranslatef(-1.4, -2.2, 1.2);
-    createCylinder(0.1, 0.1, 0.4); // left finger
-
-    glBindTexture(GL_TEXTURE_2D, texture[TEX_SKIN]);
-    glLoadIdentity();
-    gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
-    glTranslatef(-1.4, -2.2, 1.6);
-    createSphere(0.1f); // left finger point
-
-    glBindTexture(GL_TEXTURE_2D, texture[TEX_SKIN]);
-    glLoadIdentity();
-    gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
-    glTranslatef(-1.05, -2.2, 1.0);
-    glRotatef(90.0, 0.0, -1.0, 0.0);
-    createCylinder(0.1, 0.1, 0.4); // left finger2
+    glTranslatef(0.0, 0.0, -1.2);
+    createCylinder_tex(2.3,1.3,2.8,TEX_BLACK,TEX_BLACK);   // body
     
-    glBindTexture(GL_TEXTURE_2D, texture[TEX_SKIN]);
-    glLoadIdentity();
-    gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
-    glTranslatef(-1.05, -2.2, 1.0);
-    createSphere(0.1f); // left finger2 point
+//    glBindTexture(GL_TEXTURE_2D, texture[TEX_BODY]);
+//    glLoadIdentity();
+//    gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
+//    glTranslatef(0.0, 0.0, 0.5);
+//    createCylinder_tex(2.3,1.3,1.0,TEX_BLACK,TEX_BLACK);   // body top
 
-    glBindTexture(GL_TEXTURE_2D, texture[TEX_SKIN]);
-    glLoadIdentity();
-    gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
-    glTranslatef(2.5, 0.0, -0.5);
-    createSphere(0.4f); // right hand
-    
-    glBindTexture(GL_TEXTURE_2D, texture[TEX_BLACK]);
-    glLoadIdentity();
-    gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
-    glTranslatef(-1.5, 0.0, 1.0);
-    createSphere(0.4f); // left sholder
-
-    glBindTexture(GL_TEXTURE_2D, texture[TEX_BLACK]);
-    glLoadIdentity();
-    gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
-    glTranslatef(1.5, 0.0, 1.2);
-    createSphere(0.4f); // right sholder
-
-    glBindTexture(GL_TEXTURE_2D, texture[TEX_SHOE]);
-    glLoadIdentity();
-    gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
-    glTranslatef(0.8, 0.0, -3.2);
-    createSphere(0.4f); // right shoe
-    
-    glBindTexture(GL_TEXTURE_2D, texture[TEX_SHOE]);
-    glLoadIdentity();
-    gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
-    glTranslatef(-0.8, 0.0, -3.2);
-    createSphere(0.4f); // left shoe
-
-    glBindTexture(GL_TEXTURE_2D, texture[TEX_HAIR]);
-    glLoadIdentity();
-    gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
-    glTranslatef(-0.5, -0.1, 3.6);
-    glRotatef(50, 0.0, -1.0, 0.0);
-    glScalef(1.0, 1.0, 0.8);
-    createSphere(1.8f); // left hair
-    
-    glBindTexture(GL_TEXTURE_2D, texture[TEX_HAIR]);
-    glLoadIdentity();
-    gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
-    glTranslatef(0.5, -0.1, 3.6);
-    glRotatef(-50, 0.0, -1.0, 0.0);
-    glScalef(1.0, 1.0, 0.8);
-    createSphere(1.8f); // right hair
-    
     glBindTexture(GL_TEXTURE_2D, texture[TEX_FACE]);
     glLoadIdentity();
     gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
     glTranslatef(0.0, 0.0, 3.0);
     glScalef(0.9, 1.0, 1.0);
     createSphere(2.0f); // head
-
-    glBindTexture(GL_TEXTURE_2D, texture[TEX_HAIR]);
+    
+    glBindTexture(GL_TEXTURE_2D, texture[TEX_SKIN]);
     glLoadIdentity();
     gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
-    glTranslatef(0.0, 0.3, 3.2);
-    glRotatef(-180, 0.0, 0.0, 1.0);
-    createSphere(2.0f); // back hair
-
-    glBindTexture(GL_TEXTURE_2D, texture[TEX_HAIR]);
+    glTranslatef(0.7, 1.7, 2.8);
+    createSphere(0.2f); // left eye
+    
+    glBindTexture(GL_TEXTURE_2D, texture[TEX_SKIN]);
     glLoadIdentity();
     gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
-    glTranslatef(2.0, 0.6, 2.2);
+    glTranslatef(-0.7, 1.7, 2.8);
+    createSphere(0.2f); // right eye
+    
+    glBindTexture(GL_TEXTURE_2D, texture[TEX_ARM]);
+    glLoadIdentity();
+    gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
+    glTranslatef(0.3, 1.8, 2);
+    glRotatef(60, 0.0, -1.0, 0.0);
+    createCylinder_tex(0.07, 0.07, 0.7,TEX_SKIN,TEX_BLACK); // right arm
+    
+    glBindTexture(GL_TEXTURE_2D, texture[TEX_ARM]);
+    glLoadIdentity();
+    gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
+    glTranslatef(-0.3, 1.8, 2);
     glRotatef(-60, 0.0, -1.0, 0.0);
+    createCylinder_tex(0.07, 0.07, 0.7,TEX_SKIN,TEX_BLACK); // right arm
+    
+    glBindTexture(GL_TEXTURE_2D, texture[TEX_ARM]);
+    glLoadIdentity();
+    gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
+    glTranslatef(-1.9, 0.0, 0);
+    glRotatef(-30, 0.0, -1.0, 0.0);
+    createCylinder_tex(0.6, 0.6, 1.5,TEX_SKIN,TEX_BLACK); // left arm
+
+    glBindTexture(GL_TEXTURE_2D, texture[TEX_HAIR]);
+    glLoadIdentity();
+    gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
+    glTranslatef(-0.7, 0.0, 5.2);
+    glRotatef(-80, 0.0, -1.0, 0.0);
     glScalef(4.0, 1.2, 1.3);
     createSphere(0.4f); // right pony
 
     glBindTexture(GL_TEXTURE_2D, texture[TEX_HAIR]);
     glLoadIdentity();
     gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
-    glTranslatef(-2.0, 0.6, 2.2);
-    glRotatef(60, 0.0, -1.0, 0.0);
+    glTranslatef(0.7, 0.0, 5.2);
+    glRotatef(80, 0.0, -1.0, 0.0);
     glScalef(4.0, 1.2, 1.3);
     createSphere(0.4f); // left pony
     
@@ -324,7 +318,7 @@ void processMouseMotion(int x, int y)
 
     glutPostRedisplay();
 
-    if ( theta > 2.0 * PI )
+    if ( theta > 2.0 * PI ) // 360µµ ≥—æÓ∞°∏È
         theta -= (2.0 * PI);
     else if ( theta < 0.0 )
         theta += (2.0 * PI);
@@ -341,6 +335,26 @@ GLUquadricObj *sphere = gluNewQuadric();
   gluSphere(sphere,r,36 ,18);
 }
 
+void createSphereEye(GLfloat r)
+{
+    GLUquadricObj *sphere = gluNewQuadric();
+
+    gluQuadricTexture(sphere, GL_TRUE);
+    gluQuadricDrawStyle(sphere, GLU_FILL);
+    glPolygonMode(GL_FRONT, GL_FILL);
+    gluQuadricNormals(sphere, GLU_SMOOTH);
+    
+    GLfloat diffuseColor[] = {0.0f, 0.0f, 0.0f, 1.0f};  // 검정색으로 설정
+    GLfloat ambientColor[] = {0.0f, 0.0f, 0.0f, 1.0f};  // 검정색으로 설정
+
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuseColor);
+    glMaterialfv(GL_FRONT, GL_AMBIENT, ambientColor);
+
+    gluSphere(sphere, r, 36, 18);
+
+    gluDeleteQuadric(sphere);
+}
+
 void createCylinder_tex(GLfloat bottom, GLfloat top, GLfloat height, int texture1, int texture2)
 {
   GLUquadricObj *cylinder = gluNewQuadric();
@@ -350,11 +364,11 @@ void createCylinder_tex(GLfloat bottom, GLfloat top, GLfloat height, int texture
   glPolygonMode(GL_FRONT, GL_FILL);
   gluQuadricNormals(cylinder, GLU_SMOOTH);
   gluCylinder(cylinder, bottom, top, height, 20, 100);
-  
+    
   glBindTexture(GL_TEXTURE_2D, texture[texture1]);
-  createCircle(bottom, 1.0f, 0.0f);
+  createCircle(bottom, 1.0f, 0.0f); // ø¯±‚µ’ πÿ∏È
   glBindTexture(GL_TEXTURE_2D, texture[texture2]);
-  createCircle(top, -1.0f, height);
+  createCircle(top, -1.0f, height); // ø¯±‚µ’ ¿≠∏È
 }
 
 void createCylinder(GLfloat bottom, GLfloat top, GLfloat height)
@@ -365,10 +379,12 @@ void createCylinder(GLfloat bottom, GLfloat top, GLfloat height)
   gluQuadricDrawStyle(cylinder, GLU_FILL);
   glPolygonMode(GL_FRONT, GL_FILL);
   gluQuadricNormals(cylinder, GLU_SMOOTH);
+
   gluCylinder(cylinder, bottom, top, height, 20, 100);
+    
   
-  createCircle(bottom, 1.0f, 0.0f);
-  createCircle(top, -1.0f, height);
+  createCircle(bottom, 1.0f, 0.0f); // ø¯±‚µ’ πÿ∏È
+  createCircle(top, -1.0f, height); // ø¯±‚µ’ ¿≠∏È
 }
 
 // for cylinder top & bottom
@@ -391,46 +407,58 @@ void createCircle(GLfloat r, GLfloat pos, GLfloat move){
   glEnd();
 }
 
+// texure load 1
+//AUX_RGBImageRec *LoadBMPFile(char *Filename)
+//{
+//    FILE *File=NULL;                            // ∆ƒ¿œ «⁄µÈ
+//    if (!Filename)                                // ∆ƒ¿œ¿Ã∏ß¿Ã ¿¸¥ﬁµ«æ˙¥¬¡ˆ »Æ¿Œ
+//   {
+//       return NULL;                            // ±◊∑∏¡ˆ æ ¥Ÿ∏È NULL¿ª π›»Ø
+//   }
+//
+//    File=fopen(Filename,"r");                        // ∆ƒ¿œ¿Ã ¡∏¿Á«œ¥¬¡ˆ »Æ¿Œ
+//    if (File)                                // ∆ƒ¿œ¿Ã ¡∏¿Á«œ¥¬∞°?
+//   {
+//       fclose(File);                            // «⁄µÈ¿ª ¥›¿Ω
+//       return auxDIBImageLoad(Filename);                // ∫Ò∆Æ∏ ¿ª ¿–æÓµÈ¿Ã∞Ì ∆˜¿Œ≈Õ∏¶ π›»Ø
+//   }
+//
+//    return NULL;
+//}
 
-GLuint LoadBMPFile(const char* Filename)
-{
-    GLuint textureID = 0;
-    int width, height;
-    
-    unsigned char* image = SOIL_load_image(Filename, &width, &height, 0, SOIL_LOAD_RGB);
-    if (image == NULL)
-    {
-        printf("Failed to load BMP file: %s\n", Filename);
-        return 0;
-    }
-    
-    glGenTextures(1, &textureID);
-    glBindTexture(GL_TEXTURE_2D, textureID);
-    
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
-    
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    
-    SOIL_free_image_data(image);
-    
-    return textureID;
-}
+// texure load 2
+//int LoadGLTextures(char* filename, int num)
+//{
+//    int Status=FALSE;                            // ªÛ≈¬ «•Ω√±‚
+//    AUX_RGBImageRec *TextureImage[1];                    // ≈ÿΩ∫√≥øÎ ¿˙¿Â∞¯∞£¿ª ∏∏µÎ
+//    memset(TextureImage,0,sizeof(void *)*1);                // ∆˜¿Œ≈Õ∏¶ NULL∑Œ º≥¡§
 
-int LoadGLTextures(const char* filename, int num)
-{
-    GLuint textureID = LoadBMPFile(filename);
-    if (textureID == 0)
-    {
-        return FALSE;
-    }
-    
-    texture[num] = textureID;
-    
-    return TRUE;
-}
-
-
+    //printf("%s\n",filename);
+//    if (TextureImage[0]=LoadBMPFile(filename))
+//    {
+//       Status=TRUE;                            // Status∏¶ TRUE∑Œ º≥¡§
+//       glGenTextures(1, &texture[num]);                    // ≈ÿΩ∫√≥∏¶ ∏∏µÎ
+//
+//       // ∫Ò∆Æ∏ ¿∏∑Œ∫Œ≈Õ ∞°¡Æø¬ µ•¿Ã≈Õ∏¶ ªÁøÎ«— ¿œπ›¿˚¿Œ ≈ÿΩ∫√≥ ª˝º∫
+//       glBindTexture(GL_TEXTURE_2D, texture[num]);
+//       // ≈ÿΩ∫√≥∏¶ ∏∏µÁ¥Ÿ
+//       glTexImage2D(GL_TEXTURE_2D, 0, 3, TextureImage[0]->sizeX, TextureImage[0]->sizeY, 0, GL_RGB, GL_UNSIGNED_BYTE, TextureImage[0]->data);
+//       glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);    // º±«¸ « ≈Õ∏µ
+//       glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);    // º±«¸ « ≈Õ∏µ
+//    }
+//
+//     if (TextureImage[0])                            // ≈ÿΩ∫√≥∞° ¡∏¿Á«œ¥¬¡ˆ »Æ¿Œ
+//   {
+//       if (TextureImage[0]->data)                    // ≈ÿΩ∫√≥ ¿ÃπÃ¡ˆ∞° ¡∏¿Á«œ¥¬¡ˆ »Æ¿Œ
+//       {
+//           free(TextureImage[0]->data);                // ≈ÿΩ∫√≥ ¿ÃπÃ¡ˆ ∏ﬁ∏∏Æ∏¶ «ÿ¡¶
+//       }
+//
+//       free(TextureImage[0]);                        // ¿ÃπÃ¡ˆ ±∏¡∂√º∏¶ «ÿ¡¶
+//   }
+//
+//    return Status;                                // Status∏¶ π›»Ø
+//}
 
 int main (int argc, char** argv)
 {
@@ -438,7 +466,7 @@ int main (int argc, char** argv)
     glutInitDisplayMode (GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH );
     glutInitWindowPosition (100, 100);
     glutInitWindowSize (1000, 1000);
-    glutCreateWindow ("Miffy");
+    glutCreateWindow ("IU YOU&I ver");
     init();
     InitLight();
     glutDisplayFunc (display);
