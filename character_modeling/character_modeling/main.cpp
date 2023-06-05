@@ -173,27 +173,27 @@ void display (void)
     glBindTexture(GL_TEXTURE_2D, texture[TEX_SKIN]);
     glLoadIdentity();
     gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
-    glTranslatef(-0.6, 0.0, -2.2);
-    createCylinder(0.6, 0.4, 3.0); // ieft leg
+    glTranslatef(-0.55, 0.0, -1.6);
+    createCylinder(0.6, 0.4, 2.5); // ieft leg
 
     
     glBindTexture(GL_TEXTURE_2D, texture[TEX_SKIN]);
     glLoadIdentity();
     gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
-    glTranslatef(0.6, 0.0, -2.2);
-    createCylinder(0.6, 0.4, 3.0); // right leg
+    glTranslatef(0.55, 0.0, -1.6);
+    createCylinder(0.6, 0.4, 2.5); // right leg
     
     glBindTexture(GL_TEXTURE_2D, texture[TEX_SHOE]);
     glLoadIdentity();
     gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
-    glTranslatef(0.6, 0.0, -2.1);
-    createSphere(0.6f); // right shoe
+    glTranslatef(0.6, 0.0, -1.7);
+    createSphere(0.63f); // right shoe
     
     glBindTexture(GL_TEXTURE_2D, texture[TEX_SHOE]);
     glLoadIdentity();
     gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
-    glTranslatef(-0.6, 0.0, -2.1);
-    createSphere(0.6f); // left shoe
+    glTranslatef(-0.6, 0.0, -1.7);
+    createSphere(0.63f); // left shoe
 
     glBindTexture(GL_TEXTURE_2D, texture[TEX_BODY]);
     glLoadIdentity();
