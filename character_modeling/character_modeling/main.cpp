@@ -15,9 +15,9 @@
 #define TEX_BODY 2
 #define TEX_SKIN 3
 #define TEX_ARM 4
-#define TEX_SHOE 5
+#define TEX_FOOT 5
 #define TEX_FACE 7
-#define TEX_HAIR 8
+#define TEX_EAR 8
 #define TEX_BALL 9
 #define PI 3.141592
 #define TRUE 0
@@ -84,9 +84,9 @@ int init (void)
     LoadGLTextures((char *)"/Users/jwo0o0/Desktop/texture/body.jpg",TEX_BODY);
     LoadGLTextures((char *)"/Users/jwo0o0/Desktop/texture/white.jpg",TEX_SKIN);
     LoadGLTextures((char *)"/Users/jwo0o0/Desktop/texture/arm.jpg",TEX_ARM);
-    LoadGLTextures((char *)"/Users/jwo0o0/Desktop/texture/white.jpg",TEX_SHOE);
+    LoadGLTextures((char *)"/Users/jwo0o0/Desktop/texture/white.jpg",TEX_FOOT);
     LoadGLTextures((char *)"/Users/jwo0o0/Desktop/texture/white.jpg",TEX_FACE);
-    LoadGLTextures((char *)"/Users/jwo0o0/Desktop/texture/white.jpg",TEX_HAIR);
+    LoadGLTextures((char *)"/Users/jwo0o0/Desktop/texture/white.jpg",TEX_EAR);
     LoadGLTextures((char *)"/Users/jwo0o0/Desktop/texture/balloon.jpg", TEX_BALL);
 
     glEnable(GL_TEXTURE_2D);
@@ -179,13 +179,13 @@ void display (void)
     glTranslatef(0.6, 0.0, -2.2);
     createCylinder(0.6, 0.4, 3.0); // right leg
     
-    glBindTexture(GL_TEXTURE_2D, texture[TEX_SHOE]);
+    glBindTexture(GL_TEXTURE_2D, texture[TEX_FOOT]);
     glLoadIdentity();
     gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
     glTranslatef(0.6, 0.0, -2.1);
     createSphere(0.6f); // right shoe
     
-    glBindTexture(GL_TEXTURE_2D, texture[TEX_SHOE]);
+    glBindTexture(GL_TEXTURE_2D, texture[TEX_FOOT]);
     glLoadIdentity();
     gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
     glTranslatef(-0.6, 0.0, -2.1);
@@ -237,7 +237,7 @@ void display (void)
     glRotatef(-30, 0.0, -1.0, 0.0);
     createCylinder_tex(0.6, 0.6, 1.5,TEX_SKIN,TEX_BLACK); // left arm
 
-    glBindTexture(GL_TEXTURE_2D, texture[TEX_HAIR]);
+    glBindTexture(GL_TEXTURE_2D, texture[TEX_EAR]);
     glLoadIdentity();
     gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
     glTranslatef(-0.7, 0.0, 5.2);
@@ -245,7 +245,7 @@ void display (void)
     glScalef(4.0, 1.2, 1.3);
     createSphere(0.4f); // right pony
 
-    glBindTexture(GL_TEXTURE_2D, texture[TEX_HAIR]);
+    glBindTexture(GL_TEXTURE_2D, texture[TEX_EAR]);
     glLoadIdentity();
     gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
     glTranslatef(0.7, 0.0, 5.2);
