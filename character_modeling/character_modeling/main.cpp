@@ -126,151 +126,170 @@ void display (void)
     glLoadIdentity();
     gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
     
-    // modeling & texure mapping
+    /* ------------ modeling & texure mapping ------------- */
+    // right arm
     glBindTexture(GL_TEXTURE_2D, texture[TEX_ARM]);
     glLoadIdentity();
     gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
     glTranslatef(1.9, 0.0, 0);
     glRotatef(30, 0.0, -1.0, 0.0);
-    createCylinder_tex(0.6, 0.6, 1.5,TEX_SKIN,TEX_BLACK); // right arm
+    createCylinder_tex(0.6, 0.6, 1.5,TEX_SKIN,TEX_BLACK);
     
+    // left arm
     glBindTexture(GL_TEXTURE_2D, texture[TEX_ARM]);
     glLoadIdentity();
     gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
     glTranslatef(-1.9, 0.0, 0);
     glRotatef(-30, 0.0, -1.0, 0.0);
-    createCylinder_tex(0.6, 0.6, 1.5,TEX_SKIN,TEX_BLACK); // left arm
+    createCylinder_tex(0.6, 0.6, 1.5,TEX_SKIN,TEX_BLACK);
     
+    // left sholder
     glBindTexture(GL_TEXTURE_2D, texture[TEX_ARM]);
     glLoadIdentity();
     gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
     glTranslatef(-1.2, 0.0, 1.2);
-    createSphere(0.6f); // left sholder
+    createSphere(0.6f);
 
+    // right sholder
     glBindTexture(GL_TEXTURE_2D, texture[TEX_ARM]);
     glLoadIdentity();
     gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
     glTranslatef(1.2, 0.0, 1.2);
-    createSphere(0.6f); // right sholder
+    createSphere(0.6f);
     
+    // left hand
     glBindTexture(GL_TEXTURE_2D, texture[TEX_SKIN]);
     glLoadIdentity();
     gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
     glTranslatef(-1.8, 0.0, -0.3);
-    createSphere(0.6f); // left hand
+    createSphere(0.6f);
     
+    // right hand
     glBindTexture(GL_TEXTURE_2D, texture[TEX_SKIN]);
     glLoadIdentity();
     gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
     glTranslatef(1.8, 0.0, -0.3);
-    createSphere(0.6f); // right hand
-
+    createSphere(0.6f);
     
+    // ieft leg
     glBindTexture(GL_TEXTURE_2D, texture[TEX_SKIN]);
     glLoadIdentity();
     gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
     glTranslatef(-0.55, 0.0, -1.6);
-    createCylinder(0.6, 0.4, 2.5); // ieft leg
+    createCylinder(0.6, 0.4, 2.5);
 
-    
+    // right leg
     glBindTexture(GL_TEXTURE_2D, texture[TEX_SKIN]);
     glLoadIdentity();
     gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
     glTranslatef(0.55, 0.0, -1.6);
-    createCylinder(0.6, 0.4, 2.5); // right leg
+    createCylinder(0.6, 0.4, 2.5);
     
+    // right foot
     glBindTexture(GL_TEXTURE_2D, texture[TEX_FOOT]);
     glLoadIdentity();
     gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
     glTranslatef(0.6, 0.0, -1.7);
-    createSphere(0.63f); // right shoe
+    createSphere(0.63f);
     
+    // left foot
     glBindTexture(GL_TEXTURE_2D, texture[TEX_FOOT]);
     glLoadIdentity();
     gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
     glTranslatef(-0.6, 0.0, -1.7);
-    createSphere(0.63f); // left shoe
+    createSphere(0.63f);
 
+    // body
     glBindTexture(GL_TEXTURE_2D, texture[TEX_BODY]);
     glLoadIdentity();
     gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
     glTranslatef(0.0, 0.0, -1.2);
-    createCylinder_tex(2.3,1.3,2.8,TEX_BLACK,TEX_BLACK);   // body
+    createCylinder_tex(2.3,1.3,2.8,TEX_BLACK,TEX_BLACK);
 
+    // head
     glBindTexture(GL_TEXTURE_2D, texture[TEX_FACE]);
     glLoadIdentity();
     gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
     glTranslatef(0.0, 0.0, 3.0);
     glScalef(0.9, 1.0, 1.0);
-    createSphere(2.0f); // head
+    createSphere(2.0f);
     
+    // left eye
     glBindTexture(GL_TEXTURE_2D, texture[TEX_BLACK]);
     glLoadIdentity();
     gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
     glTranslatef(0.7, -1.7, 2.8);
-    createSphere(0.2f); // left eye
+    createSphere(0.2f);
     
+    // right eye
     glBindTexture(GL_TEXTURE_2D, texture[TEX_BLACK]);
     glLoadIdentity();
     gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
     glTranslatef(-0.7, -1.7, 2.8);
-    createSphere(0.2f); // right eye
+    createSphere(0.2f);
     
+    // mouth
     glBindTexture(GL_TEXTURE_2D, texture[TEX_BLACK]);
     glLoadIdentity();
     gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
     glTranslatef(0.2, -1.8, 2);
     glRotatef(60, 0.0, -1.0, 0.0);
-    createCylinder_tex(0.05, 0.05, 0.5,TEX_SKIN,TEX_BLACK); // mouth
-    
+    createCylinder_tex(0.05, 0.05, 0.5,TEX_SKIN,TEX_BLACK);
+    // mouth
     glBindTexture(GL_TEXTURE_2D, texture[TEX_BLACK]);
     glLoadIdentity();
     gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
     glTranslatef(-0.2, -1.8, 2);
     glRotatef(-60, 0.0, -1.0, 0.0);
-    createCylinder_tex(0.05, 0.05, 0.5,TEX_SKIN,TEX_BLACK); // mouth
+    createCylinder_tex(0.05, 0.05, 0.5,TEX_SKIN,TEX_BLACK);
     
+    // left arm
     glBindTexture(GL_TEXTURE_2D, texture[TEX_ARM]);
     glLoadIdentity();
     gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
     glTranslatef(-1.9, 0.0, 0);
     glRotatef(-30, 0.0, -1.0, 0.0);
-    createCylinder_tex(0.6, 0.6, 1.5,TEX_SKIN,TEX_BLACK); // left arm
+    createCylinder_tex(0.6, 0.6, 1.5,TEX_SKIN,TEX_BLACK);
 
+    // right ear
     glBindTexture(GL_TEXTURE_2D, texture[TEX_EAR]);
     glLoadIdentity();
     gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
     glTranslatef(-0.7, 0.0, 5.2);
     glRotatef(-80, 0.0, -1.0, 0.0);
     glScalef(4.0, 1.2, 1.3);
-    createSphere(0.4f); // right pony
+    createSphere(0.4f);
 
+    // left ear
     glBindTexture(GL_TEXTURE_2D, texture[TEX_EAR]);
     glLoadIdentity();
     gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
     glTranslatef(0.7, 0.0, 5.2);
     glRotatef(80, 0.0, -1.0, 0.0);
     glScalef(4.0, 1.2, 1.3);
-    createSphere(0.4f); // left pony
+    createSphere(0.4f);
     
+    // ballon line
     glBindTexture(GL_TEXTURE_2D, texture[TEX_BLACK]);
     glLoadIdentity();
     gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
     glTranslatef(2.3, 0.0, -0.5);
     glRotatef(-15, 0.0, -1.0, 0.0);
-    createCylinder_tex(0.05, 0.05, 6.5,TEX_SKIN,TEX_BLACK); // ballon line
+    createCylinder_tex(0.05, 0.05, 6.5,TEX_SKIN,TEX_BLACK);
     
+    // ballon bottom
     glBindTexture(GL_TEXTURE_2D, texture[TEX_BALL]);
     glLoadIdentity();
     gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
     glTranslatef(4, 0.0, 5.5);
-    createCylinder_tex(0.5,0,1.0,TEX_BLACK,TEX_BLACK);   // ballon bottom
+    createCylinder_tex(0.5,0,1.0,TEX_BLACK,TEX_BLACK);
     
+    // ballon top
     glBindTexture(GL_TEXTURE_2D, texture[TEX_BALL]);
     glLoadIdentity();
     gluLookAt(x, y, z, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
     glTranslatef(4, 0, 7.5);
-    createSphere(1.5f); // ballon top
+    createSphere(1.5f);
     
     glFlush ();
     glutSwapBuffers();
@@ -334,43 +353,43 @@ void processMouseMotion(int x, int y)
 
 void createSphere(GLfloat r)
 {
-GLUquadricObj *sphere = gluNewQuadric();
+    GLUquadricObj *sphere = gluNewQuadric();
   
-  gluQuadricTexture(sphere, GL_TRUE);
-  gluQuadricDrawStyle(sphere, GLU_FILL);
-  glPolygonMode(GL_FRONT, GL_FILL);
-  gluQuadricNormals(sphere, GLU_SMOOTH);
-  gluSphere(sphere,r,36 ,18);
+    gluQuadricTexture(sphere, GL_TRUE);
+    gluQuadricDrawStyle(sphere, GLU_FILL);
+    glPolygonMode(GL_FRONT, GL_FILL);
+    gluQuadricNormals(sphere, GLU_SMOOTH);
+    gluSphere(sphere,r,36 ,18);
 }
 
 void createCylinder_tex(GLfloat bottom, GLfloat top, GLfloat height, int texture1, int texture2)
 {
-  GLUquadricObj *cylinder = gluNewQuadric();
-  
-  gluQuadricTexture(cylinder, GL_TRUE);
-  gluQuadricDrawStyle(cylinder, GLU_FILL);
-  glPolygonMode(GL_FRONT, GL_FILL);
-  gluQuadricNormals(cylinder, GLU_SMOOTH);
-  gluCylinder(cylinder, bottom, top, height, 20, 100);
-  
-  glBindTexture(GL_TEXTURE_2D, texture[texture1]);
-  createCircle(bottom, 1.0f, 0.0f);
-  glBindTexture(GL_TEXTURE_2D, texture[texture2]);
-  createCircle(top, -1.0f, height);
+      GLUquadricObj *cylinder = gluNewQuadric();
+      
+      gluQuadricTexture(cylinder, GL_TRUE);
+      gluQuadricDrawStyle(cylinder, GLU_FILL);
+      glPolygonMode(GL_FRONT, GL_FILL);
+      gluQuadricNormals(cylinder, GLU_SMOOTH);
+      gluCylinder(cylinder, bottom, top, height, 20, 100);
+      
+      glBindTexture(GL_TEXTURE_2D, texture[texture1]);
+      createCircle(bottom, 1.0f, 0.0f);
+      glBindTexture(GL_TEXTURE_2D, texture[texture2]);
+      createCircle(top, -1.0f, height);
 }
 
 void createCylinder(GLfloat bottom, GLfloat top, GLfloat height)
 {
-  GLUquadricObj *cylinder = gluNewQuadric();
-  
-  gluQuadricTexture(cylinder, GL_TRUE);
-  gluQuadricDrawStyle(cylinder, GLU_FILL);
-  glPolygonMode(GL_FRONT, GL_FILL);
-  gluQuadricNormals(cylinder, GLU_SMOOTH);
-  gluCylinder(cylinder, bottom, top, height, 20, 100);
-  
-  createCircle(bottom, 1.0f, 0.0f);
-  createCircle(top, -1.0f, height);
+      GLUquadricObj *cylinder = gluNewQuadric();
+      
+      gluQuadricTexture(cylinder, GL_TRUE);
+      gluQuadricDrawStyle(cylinder, GLU_FILL);
+      glPolygonMode(GL_FRONT, GL_FILL);
+      gluQuadricNormals(cylinder, GLU_SMOOTH);
+      gluCylinder(cylinder, bottom, top, height, 20, 100);
+      
+      createCircle(bottom, 1.0f, 0.0f);
+      createCircle(top, -1.0f, height);
 }
 
 // for cylinder top & bottom
