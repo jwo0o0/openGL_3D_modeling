@@ -413,7 +413,7 @@ void createCircle(GLfloat r, GLfloat pos, GLfloat move){
 }
 
 
-GLuint LoadBMPFile(const char* Filename)
+GLuint LoadTextureFile(const char* Filename)
 {
     GLuint textureID = 0;
     int width, height;
@@ -440,7 +440,7 @@ GLuint LoadBMPFile(const char* Filename)
 
 int LoadGLTextures(const char* filename, int num)
 {
-    GLuint textureID = LoadBMPFile(filename);
+    GLuint textureID = LoadTextureFile(filename);
     if (textureID == 0)
     {
         return FALSE;
